@@ -1,36 +1,37 @@
+#pragma once
+
 #ifndef DATETYPE_H
 #define DATETYPE_H
 
 #include <iostream>
-using namespace std;
+#include <stdexcept>
+
+using namespace std; // Added this line to use std namespace
 
 class dateType {
 private:
-    int month;
     int day;
+    int month;
     int year;
 
 public:
     // Default constructor
-    dateType();
+    dateType() : day(1), month(1), year(1900) {}
 
-    // Constructor with parameters
-    dateType(int month, int day, int year);
+    // Parameterized constructor with basic validation
+    dateType(int m, int d, int y) {
+        if (m < 1 || m > 12 || d < 1 || d > 31 || y < 1900) {
+            throw invalid_argument("Invalid date");
+        }
+        month = m;
+        day = d;
+        year = y;
+    }
 
-    // Function to set the date
-    void setDate(int month, int day, int year);
-
-    // Function to print the date in MM/DD/YYYY
-    void print() const;
-
-    // Function to check if a year is a leap year
-    bool isLeapYear(int year) const;
-
-    // Function to get the number of days in a month for a given year
-    int getDaysInMonth(int month, int year) const;
-
-    // Helper function to validate the date
-    bool isValidDate(int month, int day, int year) const;
+    // Accessor functions
+    int getDay() const { return day; }
+    int getMonth() const { return month; }
+    int getYear() const { return year; }
 };
 
-#endif
+#endif // DATETYPE_H
